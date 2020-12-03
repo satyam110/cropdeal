@@ -28,7 +28,7 @@ router.post('/login', dealerSignIn)
 /**
  * delete route
  */
-router.delete('/:id', deleteDealerProfile)
+router.delete('/:id', validateToken, isAdmin, deleteDealerProfile)
 
 
 module.exports = router;
