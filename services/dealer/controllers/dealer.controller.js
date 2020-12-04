@@ -5,13 +5,13 @@ const jwt = require("jsonwebtoken");
 
 module.exports.getDealers = function(req,res,next){
     Dealer.find({})
-        .select('_id name email phone role description')
+        .select('_id name email phone role description bank_details payment_details')
         .exec()
         .then(result => {
         if(result.length>0){
             res.status(203).json({
                 totalDealers : result.length,
-                farmers:result
+                dealers:result
             })
         } else {
             res.status(500).json({
@@ -28,7 +28,7 @@ module.exports.getDealers = function(req,res,next){
 
 module.exports.getDealerProfile = function (req, res, next) {
   Dealer.findById(req.params.id)
-    .select("name email phone description _id")
+    .select("name email phone description _id bank_details payment_details")
     .then((data) => {
       if (data) {
         res.status(201).json(data);
@@ -135,6 +135,24 @@ module.exports.dealerSignIn = function (req, res, next) {
             err
           });
       }) 
+}
+
+module.exports.updateDealerProfile = function (req,res,next) {
+  const id = req.params.id;
+
+  Dealer.findByIdAndUpdate(id,req.body)
+        .exec()
+        .then(() => {
+          res.status(200).json({
+            message:"Update Successful",
+            method:"GET",
+            url:"http://localhost:3000/farmer/profile/"+id
+          })
+        }).catch((err) => {
+          res.status(404).json({
+            error:err
+          });
+        });
 }
 
 module.exports.deleteDealerProfile = function (req, res, next) {

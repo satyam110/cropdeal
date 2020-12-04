@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 // fetch all farmer details function
 module.exports.getFarmers = function(req,res,next){
     Farmer.find({})
-        .select('_id name email phone role description')
+        .select('_id name email phone role description bank_details')
         .exec().then(result => {
         if(result){
             res.status(203).json({
@@ -30,7 +30,7 @@ module.exports.getFarmers = function(req,res,next){
 // fetch farmer profile function
 module.exports.getFarmerProfile = function (req, res, next) {
   Farmer.findById(req.params.id)
-    .select("name email phone description _id")
+    .select("name email phone description _id bank_details")
     .then((data) => {
       if (data) {
         res.status(201).json(data);
@@ -138,6 +138,20 @@ module.exports.farmerSignIn = function (req, res, next) {
 
 module.exports.updateFarmerProfile = function (req,res,next) {
   const id = req.params.id;
+
+  Farmer.findByIdAndUpdate(id,req.body)
+        .exec()
+        .then(() => {
+          res.status(200).json({
+            message:"Update Successful",
+            method:"GET",
+            url:"http://localhost:3000/farmer/profile/"+id
+          })
+        }).catch((err) => {
+          res.status(404).json({
+            error:err
+          });
+        });
 }
 
 // farmer profile deletion function

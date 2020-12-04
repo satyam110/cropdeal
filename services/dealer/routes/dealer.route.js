@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {dealerSignUp,deleteDealerProfile,getDealerProfile,getDealers,dealerSignIn, verifyToken} = require('../controllers/dealer.controller');
+const {dealerSignUp,deleteDealerProfile,getDealerProfile,updateDealerProfile,getDealers,dealerSignIn, verifyToken} = require('../controllers/dealer.controller');
 const { validateToken, isValidUser, isAdmin } = require('../controllers/auth.controller');
 
 /**
@@ -24,6 +24,11 @@ router.post('/signup', dealerSignUp)
  * sign in endpoint
  */
 router.post('/login', dealerSignIn)
+
+/**
+ * update dealer profile
+ */
+router.put('/:id', validateToken, isValidUser, updateDealerProfile)
 
 /**
  * delete route
