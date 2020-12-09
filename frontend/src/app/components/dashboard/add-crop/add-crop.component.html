@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row pt-5 pb-5">
+    <div class="col-md-8 mx-auto">
+      <div class="card rounded-0">
+        <div class="card-header bg-light">
+          <h3 class="mb-0">Publish a new Crop</h3>
+        </div>
+        <div class="card-body">
+          <form #addCropForm="ngForm" novalidate (ngSubmit)="addCrop()" class="form">
+            <div class="form-group">
+              <label for="">Name</label>
+              <input type="text" #name="ngModel" [class.is-invalid]="name.invalid && name.touched" class="form-control rounded-0"
+                      [(ngModel)]="cropData.name" name="name" required>
+               <small class="text-danger" [class.d-none]="name.valid || name.untouched">Name is required</small>
+            </div>
+            <div class="form-group">
+              <label for="">Crop Type</label>
+              <select class="custom-select" name="type"  #type="ngModel" (blur)="validateType(type.value)" (change)="validateType(type.value)"
+                  [class.is-invalid]="typeHasError && type.touched" [(ngModel)]="cropData.type" >
+                <option value="default">Select Crop Type</option>
+                <option value="Vegetable">Vegetable</option>
+                <option value="Fruit">Fruits</option>
+                <option value="Grain">Grain</option>
+              </select>
+            <!-- <small class="text-danger" [class.d-none]="!typeHasError">Type is required</small> -->
+            </div>
+            <div class="form-group">
+              <label for="">Quantity (Kgs.)</label>
+              <input type="number" #quantity="ngModel" [class.is-invalid]="quantity.invalid && quantity.touched" class="form-control rounded-0"
+                      [(ngModel)]="cropData.quantity" name="quantity" required>
+               <small class="text-danger" [class.d-none]="quantity.valid || quantity.untouched">Quantity is required</small>
+            </div>
+            <div class="form-group">
+              <label for="">Location</label>
+              <input type="text" #location="ngModel" [class.is-invalid]="location.invalid && location.touched" class="form-control rounded-0"
+                      [(ngModel)]="cropData.location" name="location" required>
+               <small class="text-danger" [class.d-none]="location.valid || location.untouched">Location is required</small>
+            </div>
+            <div class="form-group">
+              <label for="">Cost (/Kgs.)</label>
+              <input type="text" #cost="ngModel" [class.is-invalid]="cost.invalid && cost.touched" class="form-control rounded-0"
+                      [(ngModel)]="cropData.cost" name="cost" required>
+               <small class="text-danger" [class.d-none]="cost.valid || cost.untouched">Cost is required</small>
+            </div>
+            <button [disabled]="addCropForm.form.invalid || typeHasError" class="btn btn-primary mx-auto">Publish Crop Details</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

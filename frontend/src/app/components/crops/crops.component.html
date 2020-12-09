@@ -1,0 +1,20 @@
+<div class="container">
+  <button class="btn btn-primary mt-3" (click)="back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+  <div class="row mt-5">
+    <div class="col-md-4 mb-3" *ngFor="let crop of crops">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">{{crop.name}}</h5>
+          <p class="card-text">{{crop.type}}</p>
+          <p class="card-text">Qty. - {{crop.quantity}} Kgs.</p>
+          <p class="card-text"><i class="fa fa-map-marker" aria-hidden="true"></i> {{crop.location}}</p>
+        </div>
+        <div class="card-footer text-muted">
+          <a routerLink="{{crop._id}}" class="btn btn-success">Get Quote</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,21 @@
+<div class="container">
+
+    <div  *ngIf="crops.length > 0;else elseBlock">
+      <div class="row mt-5">
+      <div class="col-md-6" *ngFor="let crop of crops">
+        <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">{{crop.name}}</h5>
+            <p class="card-text">{{crop.type}}</p>
+            <p class="card-text">Qty. - {{crop.quantity}} Kgs.</p>
+            <p class="card-text">{{crop.location}}</p>
+          </div>
+          <div class="card-footer text-muted">
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <ng-template #elseBlock>No Crops Uploaded Yet</ng-template>
+</div>
+

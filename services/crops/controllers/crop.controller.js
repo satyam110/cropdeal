@@ -46,6 +46,20 @@ module.exports.getCropById = function (req, res, next) {
     });
 };
 
+
+module.exports.getCropsFarmer = function (req,res,next) {
+  Crop.find({uploader:req.params.farmerId})
+      .then((crop)=>{
+        if(crop){
+          res.status(200).json(crop)
+        }else{
+          res.status(404).json({ error: "Cannot fetch entry with that ID" });
+        }
+      }).catch(()=>{
+        res.status(500).json({ error: "Something Went Wrong" });
+      })
+}
+
 module.exports.postCropDetails = function (req, res, next) {
   const crop = new Crop(req.body);
 

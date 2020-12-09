@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { getCrops,getCropById,postCropDetails,updateCropDetails, deleteCropById } = require('../controllers/crop.controller');
+const { getCrops,getCropById,postCropDetails,updateCropDetails, deleteCropById, getCropsFarmer } = require('../controllers/crop.controller');
 const { validateToken, isValidUser, isAdmin } = require('../controllers/auth.controller');
 /**
  * get all crops
@@ -14,6 +14,12 @@ router.get('/',validateToken,getCrops);
  */
 
 router.get('/:cropId',validateToken,getCropById);
+
+/**
+ * get crop according to farmer
+ */
+
+router.get('/farmer/:farmerId',validateToken,getCropsFarmer)
 
 /**
  * post crop details

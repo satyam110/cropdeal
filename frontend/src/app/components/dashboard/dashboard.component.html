@@ -1,0 +1,57 @@
+<!-- <div *ngIf="user.role==='farmer'">
+  Farmer Profile
+</div>
+
+<div *ngIf="user.role==='dealer'">
+  dealer Profile
+</div> -->
+<!-- {{user | json}} -->
+<div class="d-flex" id="wrapper">
+
+  <!-- Sidebar -->
+  <div class="bg-light border-right" id="sidebar-wrapper">
+    <div class="sidebar-heading">Welcome, {{email}}</div>
+    <div class="list-group list-group-flush">
+      <a (click)="setProfileView()" class="list-group-item list-group-item-action bg-light">Profile</a>
+      <span *ngIf="role === 'farmer'"><a (click)="setAddCropView()" class="list-group-item list-group-item-action bg-light">Add Crop</a></span>
+      <span *ngIf="role === 'farmer'"><a (click)="setViewCropView()" class="list-group-item list-group-item-action bg-light">View Added Crops</a></span>
+      <span *ngIf="role === 'dealer'"><a href="#" class="list-group-item list-group-item-action bg-light">Subscribed Crops</a></span>
+      <span *ngIf="role === 'dealer'"><a href="#" class="list-group-item list-group-item-action bg-light">Payment Details</a></span>
+      <a (click)="setBankDetailsView()" class="list-group-item list-group-item-action bg-light">Bank Details</a>
+    </div>
+  </div>
+  <!-- /#sidebar-wrapper -->
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+
+    <button class="btn btn-primary" onclick="toggle()" id="menu-toggle"><i class="fa fa-bars"></i></button>
+      <app-profile *ngIf="showProfile"></app-profile>
+      <app-add-crop *ngIf="showAddCrop"></app-add-crop>
+      <app-view-crop *ngIf="showViewCrop"></app-view-crop>
+      <app-bank-details *ngIf="showBankDetails"></app-bank-details>
+      <router-outlet></router-outlet>
+  </div>
+
+  </div>
+  <!-- /#page-content-wrapper -->
+
+
+<!-- <div class="container">
+  <div class="row mt-5">
+    <div class="col-md-12 mb-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">{{user.name}}</h5>
+          <p class="card-text">{{user.email}}</p>
+          <p class="card-text">{{user.phone}}</p>
+          <p class="card-text">Description : {{user.description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+

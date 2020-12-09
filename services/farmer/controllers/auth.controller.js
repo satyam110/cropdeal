@@ -9,11 +9,11 @@ module.exports.validateToken = function (req,res,next) {
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
 
-  if(token === null) return res.sendStatus(401)
+  if(token === null) return res.status(401).json({error:'Token Missing'})
   
   
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err,userdata) => {
-      if(err) return res.sendStatus(403)
+      if(err) return res.status(403).json({error:'Invalid Token'})
       req.user = userdata
       console.log(req.user)
       next()

@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="row pt-5 pb-5">
+    <div class="col-md-8 mx-auto">
+      <div class="card rounded-0">
+        <div class="card-header bg-light">
+          <h3 class="mb-0">Sign Up</h3>
+        </div>
+        <div class="card-body">
+          <form #signupForm="ngForm" novalidate (ngSubmit)="registerUser()" class="form">
+            <div class="form-group">
+              <label for="">Name</label>
+              <input type="text" #name="ngModel" [class.is-invalid]="name.invalid && name.touched" class="form-control rounded-0"
+                      [(ngModel)]="registerUserData.name" name="name" required>
+               <small class="text-danger" [class.d-none]="name.valid || name.untouched">Name is required</small>
+            </div>
+            <div class="form-group">
+              <label for="">Email</label>
+              <input type="email" #email="ngModel" [class.is-invalid]="email.invalid && email.touched" class="form-control rounded-0"
+                      [(ngModel)]="registerUserData.email" name="email" required>
+              <small class="text-danger" [class.d-none]="email.valid || email.untouched">Please enter email </small>
+            </div>
+            <div class="form-group">
+              <label for="">Phone</label>
+              <input type="number" maxlength="10" #phone="ngModel" [class.is-invalid]="phone.invalid && phone.touched" class="form-control rounded-0"
+                      [(ngModel)]="registerUserData.phone" name="phone" required>
+              <small class="text-danger" [class.d-none]="phone.valid || phone.untouched">Please enter phone details</small>
+            </div>
+            <div class="form-group">
+              <label for="">Password</label>
+              <input type="password" #password="ngModel" [class.is-invalid]="password.invalid && password.touched" class="form-control rounded-0"
+                      [(ngModel)]="registerUserData.password" name="password" required>
+              <small class="text-danger" [class.d-none]="password.valid || password.untouched">Please enter password</small>
+            </div>
+            <div class="form-group">
+              <label for="">Description</label>
+              <textarea #description="ngModel" [class.is-invalid]="description.invalid && description.touched" class="form-control rounded-0"
+                      [(ngModel)]="registerUserData.description" name="description" rows="3" required></textarea>
+              <small class="text-danger" [class.d-none]="description.valid || description.untouched">Please enter description</small>
+            </div>
+            <div class="form-group">
+              <label for="">Sign Up as</label>
+              <select class="custom-select" name="type"  #type="ngModel" (blur)="validateType(type.value)" (change)="validateType(type.value)"
+                  [class.is-invalid]="typeHasError && type.touched" [(ngModel)]="registerUserData.type" >
+                <option value="default">Choose User Type</option>
+                <option value="farmer">Farmer</option>
+                <option value="dealer">Dealer</option>
+            </select>
+            <small class="text-danger" [class.d-none]="type.valid || type.untouched">Type is required</small>
+            </div>
+            <span>Already Have an Account? </span><a routerLink="/login">Sign in</a>
+            <button [disabled]="signupForm.form.invalid || typeHasError" class="btn btn-primary float-right">Sign Up</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

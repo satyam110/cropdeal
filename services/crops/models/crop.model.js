@@ -19,10 +19,10 @@ const cropSchema = new mongoose.Schema({
         type: String
     },
     cost:{
-        type: Number
+        type: String
     },
     uploader:{
-        type: mongoose.SchemaTypes.ObjectId
+        type: String
     }
 })
 

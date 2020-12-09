@@ -28,7 +28,7 @@ module.exports.getDealers = function(req,res,next){
 
 module.exports.getDealerProfile = function (req, res, next) {
   Dealer.findById(req.params.id)
-    .select("name email phone description _id bank_details payment_details")
+    .select("name email phone description _id bank_details payment_details role")
     .then((data) => {
       if (data) {
         res.status(201).json(data);
@@ -93,7 +93,7 @@ module.exports.dealerSignIn = function (req, res, next) {
         //         error: "Auth Failed",
         //       });
         // }
-        console.log(dealer);
+        //console.log(dealer);
         bcrypt.compare(req.body.password, dealer.password, (err, result) => {
           if (err) {
             return res.status(401).json({
@@ -112,7 +112,10 @@ module.exports.dealerSignIn = function (req, res, next) {
 
             return res.status(200).json({
               message: "Auth Successful",
-              token
+              token,
+              id:dealer._id,
+              email:dealer.email,
+              role:dealer.role
             });
             // const url = 'http://localhost:3003/auth';
             // const payload = {
@@ -132,7 +135,6 @@ module.exports.dealerSignIn = function (req, res, next) {
       }).catch(()=> {
         res.status(401).json({
             error: "Auth Failed",
-            err
           });
       }) 
 }

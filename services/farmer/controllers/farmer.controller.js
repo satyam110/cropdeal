@@ -30,7 +30,7 @@ module.exports.getFarmers = function(req,res,next){
 // fetch farmer profile function
 module.exports.getFarmerProfile = function (req, res, next) {
   Farmer.findById(req.params.id)
-    .select("name email phone description _id bank_details")
+    .select("name email phone description _id bank_details role")
     .then((data) => {
       if (data) {
         res.status(201).json(data);
@@ -106,10 +106,13 @@ module.exports.farmerSignIn = function (req, res, next) {
               role: farmer.role
             }
 
-            const token = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "300s" })
+            const token = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "600s" })
             return res.status(200).json({
               message: "Auth Successful",
-              token
+              token,
+              id: farmer._id,
+              email: farmer.email,
+              role: farmer.role
             });
             // const url = 'http://localhost:3003/auth';
             // const payload = {

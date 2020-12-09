@@ -1,0 +1,21 @@
+<div class="container">
+  <button class="btn btn-primary mt-3" (click)="back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+  <div class="row mt-5">
+    <div class="col-md-12 mb-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Crop name : {{crop.name}}</h5>
+          <p class="card-text">Type : {{crop.type}}</p>
+          <p class="card-text">Qty. : {{crop.quantity}} Kgs.</p>
+          <p class="card-text">Address : {{crop.location}}</p>
+          <p class="card-text">Uploaded by : {{crop.farmerName}}</p>
+          <p class="card-text">Phone : {{crop.farmerPhone}}</p>
+          <p class="card-text">About Farmer : {{crop.description}}</p>
+        </div>
+        <div class="card-footer text-muted">
+          <a routerLink="#" class="btn btn-success">Buy</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

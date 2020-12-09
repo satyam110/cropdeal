@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-6 mx-auto">
+      <div class="card rounded-4">
+        <div class="card-header bg-light">
+          <h3 class="mb-0">Sign In</h3>
+        </div>
+        <div class="card-body p-5">
+          <form #loginForm="ngForm" novalidate (ngSubmit)="loginUser()" class="form">
+            <div class="form-group">
+              <label for="">Login as</label>
+              <select class="custom-select" name="type"  #type="ngModel" (blur)="validateType(type.value)" (change)="validateType(type.value)"
+                  [class.is-invalid]="typeHasError && type.touched" [(ngModel)]="loginUserData.type" >
+                <option value="default">Choose User Type</option>
+                <option value="farmer">Farmer</option>
+                <option value="dealer">Dealer</option>
+            </select>
+            <small class="text-danger" [class.d-none]="type.valid || type.untouched">Type is required</small>
+            </div>
+            <div class="form-group">
+              <label for="">Email</label>
+              <input type="email" #email="ngModel" [class.is-invalid]="email.invalid && email.touched" class="form-control rounded-8"
+                    [(ngModel)]="loginUserData.email" name="email" required>
+              <small class="text-danger" [class.d-none]="email.valid || email.untouched">Email is required</small>
+            </div>
+            <div class="form-group">
+              <label for="">Password</label>
+              <input type="password" #password="ngModel" [class.is-invalid]="password.invalid && password.touched" class="form-control rounded-8"
+                  [(ngModel)]="loginUserData.password" name="password" required>
+                  <small class="text-danger" [class.d-none]="password.valid || password.untouched">Please enter password</small>
+            </div>
+            <div><small class="text-danger">{{errorMsg}}</small></div>
+            <span>New here? </span><a routerLink="/signup">Sign Up</a>
+            <button [disabled]="loginForm.form.invalid || typeHasError" class="btn btn-success float-right rounded-5">Sign In</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

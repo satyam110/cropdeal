@@ -1,0 +1,40 @@
+<!-- <div class="container">
+<h1 class="mt-4">Profile</h1>
+      <div class="row mt-5">
+        <div class="col-xl-12 mb-3">
+          <div class="card text-center">
+            <div class="card-body">
+              <h5 class="card-title">{{user.name}}</h5>
+              <p class="card-text">{{user.email}}</p>
+              <p class="card-text">{{user.phone}}</p>
+              <p class="card-text">Description : {{user.description}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+</div> -->
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-6 mb-3 mx-auto">
+      <div class="card">
+        <div class="card-header">
+         <h4>{{user.name}}&apos;s Profile</h4>
+        </div>
+        <div class="card-body text-center">
+          <div class="card-image">
+            <img src="https://uwe-repository.worktribe.com/img/user.svg" height="20%" width="20%" />
+          </div>
+          <h5 class="card-title">Name : {{user.name}}</h5>
+          <p class="card-text"><i class="fa fa-envelope" aria-hidden="true"></i> {{user.email}}</p>
+          <p class="card-text"><i class="fa fa-phone" aria-hidden="true"></i> {{user.phone}}</p>
+          <!-- <p class="card-text"><i class="fa fa-star"></i><i class="fa fa-star "></i><i class="fa fa-star "></i><i class="fa fa-star-o "></i><i class="fa fa-star-o "></i></p> -->
+          <div class="card-footer">
+            <p class="card-text">Description : {{user.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
