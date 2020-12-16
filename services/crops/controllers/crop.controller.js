@@ -1,13 +1,15 @@
 const Crop = require("../models/crop.model");
 const axios = require("axios");
+//const stripe = require('stripe')('sk_test_51Hxrh3ADSPBvTAXQIHXYoR7dCy9QWy5owLLHXAZC5hFogHGxVIq0rBtB2713uZaL2zIpHhgrodJARZAXekX4jPrw00EghbLxn8')
+
 
 module.exports.getCrops = function (req, res, next) {
-  Crop.find({})
+  Crop.find({ approved: true })
     .then((data) => {
       res.status(201).json(data);
     })
     .catch((err) => {
-      res.status(500).json({ error: "Something Went Wrong" });
+      res.status(400).json({ error: "Something Went Wrong",err });
     });
 };
 
@@ -16,7 +18,7 @@ module.exports.getCropById = function (req, res, next) {
   Crop.findById(req.params.cropId)
     .then((crop) => {
       if (crop) {
-        const { name, type, quantity, location, uploader } = crop;
+        const { name, type, quantity, location, uploader, imgUrl, cost } = crop;
         
           const url = "http://localhost:3000/farmer/" + uploader;
           axios.get(url , {
@@ -30,8 +32,12 @@ module.exports.getCropById = function (req, res, next) {
                 type,
                 quantity,
                 location,
+                cost,
+                uploader,
+                imgUrl,
                 farmerName: response.data.name,
                 farmerPhone: response.data.phone,
+                farmerEmail: response.data.email,
                 description: response.data.description,
               });
             })
@@ -61,7 +67,17 @@ module.exports.getCropsFarmer = function (req,res,next) {
 }
 
 module.exports.postCropDetails = function (req, res, next) {
-  const crop = new Crop(req.body);
+  
+  const url = req.protocol+'://'+req.get("host");
+  const crop = new Crop({
+    name: req.body.name,
+    type: req.body.type,
+    quantity: req.body.quantity,
+    location: req.body.location,
+    cost: req.body.cost,
+    uploader: req.body.uploader,
+    imgUrl: url+'/uploads/'+ req.file.filename
+  });
 
   crop
     .save()
@@ -69,7 +85,9 @@ module.exports.postCropDetails = function (req, res, next) {
       console.log(data);
       res.status(201).json(data);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      res.status(400).json({error:'Something went wrong'})
+    });
 };
 
 module.exports.updateCropDetails = function (req, res, next) {
@@ -85,8 +103,8 @@ module.exports.updateCropDetails = function (req, res, next) {
       res.status(201).json(data);
     })
     .catch((err) => {
-      res.status(500).json({
-        error: err,
+      res.status(400).json({
+        error: 'Error updating crop details',
       });
     });
 };
@@ -106,7 +124,71 @@ module.exports.deleteCropById = function (req, res, next) {
     });
 };
 
+module.exports.getCropsSubscribed = function (req,res,next) {
+  const cropsSubscribed = req.body.cropsSubscribed;
+  console.log(req.headers);
+  Crop.find({ name : {$in: cropsSubscribed} })
+      .then(crops => {
+        res.status(200).send(crops)
+      }).catch(err => {
+        res.status(404).send({"error":err})
+      })
+}
 
+module.exports.getCropsUnderReview = function(req,res,next){
+  Crop.find({ approved: false })
+    .then((data) => {
+      res.status(201).json(data);
+    })
+    .catch((err) => {
+      res.status(400).json({ error: "Something Went Wrong" });
+    });
+}
+
+module.exports.approveCrop = function(req,res,next){
+  const id = req.params.id;
+  Crop.findByIdAndUpdate(id,req.body)
+      .exec()
+      .then((data) => {
+        res.status(201).json({message:"Updated Successfully"})
+      })
+      .catch((err) => {
+        res.status(400).json({error: "Something Went Wrong",err});
+      })
+}
+
+module.exports.getDistinctCropName = function(req,res,next){
+  Crop.find()
+      .distinct('name' , function (err, names){
+        if(err){
+          res.status(401).json({error: "something went wrong", err})
+        }
+
+        res.status(201).json(names)
+      })
+    
+}
+
+
+// /* STRIPE PAYMENT METHOD */
+// module.exports.stripePayment = function(req,res,next) {
+  
+//     stripe.charges.create({
+//       amount: req.body.amount*100,
+//       currency: 'INR',
+//       description: 'Payment for Crop Purchase',
+//       source: req.body.token.id
+//     }, (err, charge)=>{
+//       if(err){
+//        next(err);
+//       }
+//       res.json({success:true, status:"Payment Successfull"})
+//     })
+
+//     console.log(req.body);
+// }
+
+/* STRIPE PAYMENT METHOD */
 
 // const url = "http://localhost:3000/farmer/profile/" + crop.uploader;
 //         axios

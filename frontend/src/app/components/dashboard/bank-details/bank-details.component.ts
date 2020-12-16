@@ -1,4 +1,3 @@
-import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -20,7 +19,8 @@ export class BankDetailsComponent implements OnInit {
   id = localStorage.getItem('currentUser');
   role = localStorage.getItem('role');
   editable = false;
-  constructor(private fb: FormBuilder, private _profile:ProfileService, private _router:Router, private _authService:AuthService, private location: Location) { }
+  loaded=false
+  constructor(private fb: FormBuilder, private _profile:ProfileService, private _router:Router, private _authService:AuthService) { }
   ngOnInit(): void {
 
 
@@ -31,6 +31,7 @@ export class BankDetailsComponent implements OnInit {
       res => {
         this.bank_details=res.bank_details,
         console.log(this.bank_details);
+        this.loaded=true
         this.bankDetails=this.fb.group({
           bank_name: this.bank_details.bank_name,
           acc_no: this.bank_details.acc_no,

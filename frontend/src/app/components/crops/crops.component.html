@@ -1,16 +1,25 @@
 <div class="container">
   <button class="btn btn-primary mt-3" (click)="back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
   <div class="row mt-5">
-    <div class="col-md-4 mb-3" *ngFor="let crop of crops">
+    <div class="col-md-4 col-sm-6 mb-3" *ngFor="let crop of crops">
       <div class="card text-center">
         <div class="card-body">
-          <h5 class="card-title">{{crop.name}}</h5>
-          <p class="card-text">{{crop.type}}</p>
-          <p class="card-text">Qty. - {{crop.quantity}} Kgs.</p>
-          <p class="card-text"><i class="fa fa-map-marker" aria-hidden="true"></i> {{crop.location}}</p>
+          <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="300" Cheight="150"></app-skeleton-loader>
+          <div class="crop-image">
+            <img *ngIf="loaded" class="card-img-top " [src]="crop.imgUrl" [alt]="crop.name">
+          </div>
+          <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center mt-2" Cwidth="300" Cheight="30"></app-skeleton-loader>
+          <h5 *ngIf="loaded"class="card-title">{{crop.name}}</h5>
+          <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="300" Cheight="30"></app-skeleton-loader>
+          <p *ngIf="loaded" class="card-text">{{crop.type}}</p>
+          <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="300" Cheight="30"></app-skeleton-loader>
+          <p *ngIf="loaded" class="card-text">Qty. - {{crop.quantity}} Kgs.</p>
+          <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="300" Cheight="30"></app-skeleton-loader>
+          <p *ngIf="loaded" class="card-text"><i class="fa fa-map-marker" aria-hidden="true"></i> {{crop.location}}</p>
         </div>
         <div class="card-footer text-muted">
-          <a routerLink="{{crop._id}}" class="btn btn-success">Get Quote</a>
+          <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="300" Cheight="30"></app-skeleton-loader>
+          <a routerLink="{{crop._id}}" *ngIf="loaded" class="btn btn-success">Get Quote</a>
         </div>
       </div>
     </div>

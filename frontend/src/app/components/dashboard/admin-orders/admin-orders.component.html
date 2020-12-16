@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="row pt-5">
+    <div class="col-md-12 mb-4 mx-auto">
+      <div class="card">
+        <div class="card-header text-center">
+          <h4>
+            Orders on Crop Deal Portal
+          </h4>
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table">
+            <tr>
+              <th>
+                Seller
+              </th>
+              <th>
+                Seller Email
+              </th>
+              <th>
+                Buyer
+              </th>
+              <th>
+                Buyer Email
+              </th>
+              <th>
+                Product
+              </th>
+              <th>
+                Quantity
+              </th>
+              <th>
+                Bill Amount
+              </th>
+              <th>
+                Date of Purchase
+              </th>
+            </tr>
+            <tr *ngFor="let invoice of invoices">
+              <td>
+                <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+                <span *ngIf="loaded"> {{invoice.sellerName}} </span>
+              </td>
+              <td>
+                <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+                <span *ngIf="loaded"> {{invoice.sellerEmail}} </span>
+              </td>
+              <td>
+                <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+                <span *ngIf="loaded"> {{invoice.buyerName}} </span>
+              </td>
+              <td>
+                <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+                <span *ngIf="loaded"> {{invoice.buyerEmail}} </span>
+              </td>
+              <td>
+                <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+                <span *ngIf="loaded"> {{invoice.productName}} </span>
+              </td>
+              <td>
+                <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+                <span *ngIf="loaded"> {{invoice.quantity}} Kgs. </span>
+              </td>
+              <td>
+                <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+                <span *ngIf="loaded"> {{invoice.totalCost | currency:'INR'}} </span>
+              </td>
+              <td>
+                <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+                <span *ngIf="loaded"> {{invoice.createdAt | slice:0:10}} </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

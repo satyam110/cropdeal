@@ -6,17 +6,22 @@
           <h3 class="mb-0">Publish a new Crop</h3>
         </div>
         <div class="card-body">
-          <form #addCropForm="ngForm" novalidate (ngSubmit)="addCrop()" class="form">
+          <div *ngIf="success" class="alert alert-primary alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Crop Data is sent for Admin Approval!</strong>
+          </div>
+          <!-- {{cropForm.value | json}} -->
+          <form [formGroup]='cropForm' novalidate (ngSubmit)="addCrop()" class="form">
             <div class="form-group">
               <label for="">Name</label>
-              <input type="text" #name="ngModel" [class.is-invalid]="name.invalid && name.touched" class="form-control rounded-0"
-                      [(ngModel)]="cropData.name" name="name" required>
-               <small class="text-danger" [class.d-none]="name.valid || name.untouched">Name is required</small>
+              <input type="text" [class.is-invalid]="cropForm.get('name').invalid && cropForm.get('name').touched" class="form-control rounded-0"
+                      formControlName="name" name="name" required>
+               <small class="text-danger" [class.d-none]="cropForm.get('name').valid || cropForm.get('name').untouched">Name is required</small>
             </div>
             <div class="form-group">
               <label for="">Crop Type</label>
-              <select class="custom-select" name="type"  #type="ngModel" (blur)="validateType(type.value)" (change)="validateType(type.value)"
-                  [class.is-invalid]="typeHasError && type.touched" [(ngModel)]="cropData.type" >
+              <select class="custom-select" name="type" (blur)="validateType(cropForm.get('type').value)" (change)="validateType(cropForm.get('type').value)"
+                  [class.is-invalid]="typeHasError && cropForm.get('type').touched" formControlName="type" >
                 <option value="default">Select Crop Type</option>
                 <option value="Vegetable">Vegetable</option>
                 <option value="Fruit">Fruits</option>
@@ -25,24 +30,31 @@
             <!-- <small class="text-danger" [class.d-none]="!typeHasError">Type is required</small> -->
             </div>
             <div class="form-group">
+              <label for="">Select Image</label>
+              <button class="btn btn-primary ml-2 btn-md" type="button" (click)="filePicker.click()"><i class="fa fa-upload" aria-hidden="true"></i></button>
+              <input type="file" #filePicker (change)="onImageSelected($event)" accept=".jpg, .png, .jpeg">
+            </div>
+            <div class="image-preview" *ngIf="url !== '' && url">
+              <img [src]="url" [alt]="cropForm.value.name">
+            </div>
+            <div class="form-group">
               <label for="">Quantity (Kgs.)</label>
-              <input type="number" #quantity="ngModel" [class.is-invalid]="quantity.invalid && quantity.touched" class="form-control rounded-0"
-                      [(ngModel)]="cropData.quantity" name="quantity" required>
-               <small class="text-danger" [class.d-none]="quantity.valid || quantity.untouched">Quantity is required</small>
+              <input type="number"  [class.is-invalid]="cropForm.get('quantity').invalid && cropForm.get('quantity').touched" class="form-control rounded-0"
+                     formControlName="quantity" name="quantity">
+               <small class="text-danger" [class.d-none]="cropForm.get('quantity').valid || cropForm.get('quantity').untouched">Quantity is required</small>
             </div>
             <div class="form-group">
               <label for="">Location</label>
-              <input type="text" #location="ngModel" [class.is-invalid]="location.invalid && location.touched" class="form-control rounded-0"
-                      [(ngModel)]="cropData.location" name="location" required>
-               <small class="text-danger" [class.d-none]="location.valid || location.untouched">Location is required</small>
+              <input type="text" formControlName="location" [class.is-invalid]="cropForm.get('location').invalid && cropForm.get('location').touched"
+                      class="form-control rounded-0" name="location">
+               <small class="text-danger" [class.d-none]="cropForm.get('location').valid || cropForm.get('location').untouched">Location is required</small>
             </div>
             <div class="form-group">
               <label for="">Cost (/Kgs.)</label>
-              <input type="text" #cost="ngModel" [class.is-invalid]="cost.invalid && cost.touched" class="form-control rounded-0"
-                      [(ngModel)]="cropData.cost" name="cost" required>
-               <small class="text-danger" [class.d-none]="cost.valid || cost.untouched">Cost is required</small>
+              <input type="text" formControlName="cost" [class.is-invalid]="cropForm.get('cost').invalid && cropForm.get('cost').touched" class="form-control rounded-0" name="cost" >
+               <small class="text-danger" [class.d-none]="cropForm.get('cost').valid || cropForm.get('cost').untouched">Cost is required</small>
             </div>
-            <button [disabled]="addCropForm.form.invalid || typeHasError" class="btn btn-primary mx-auto">Publish Crop Details</button>
+            <button [disabled]="cropForm.invalid || typeHasError" class="btn btn-primary mx-auto">Publish Crop Details</button>
           </form>
         </div>
       </div>

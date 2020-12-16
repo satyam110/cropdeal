@@ -1,4 +1,3 @@
-const { MongoClient } = require('mongodb');
 const mongoose = require('mongoose');
 
 const cropSchema = new mongoose.Schema({
@@ -23,7 +22,14 @@ const cropSchema = new mongoose.Schema({
     },
     uploader:{
         type: String
+    },
+    imgUrl:{
+        type: String
+    },
+    approved:{
+        type: Boolean,
+        default: false
     }
-})
+},{timestamps:true})
 
 module.exports = mongoose.model('Crop', cropSchema );

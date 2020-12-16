@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="row mb-4">
+    <div class="col-md-8 mx-auto">
+      <div class="card">
+        <div class="card-header text-center">
+          <h3>Subscribe to Crops</h3>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <select #name class="custom-select" name="crops" >
+              <option value="default">Choose Crop to Subscribe</option>
+              <option *ngFor="let name of names" [value]="name">{{name}}</option>
+            </select>
+          </div>
+          <button class="btn btn-success float-right" (click)="subscribeCrop(name.value)">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div  *ngIf="crops.length > 0;else elseBlock">
+
+    <div class="row mt-5">
+    <div class="col-md-6" *ngFor="let crop of crops">
+      <div class="card text-center">
+        <div class="card-body">
+          <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+          <h5 *ngIf="loaded" class="card-title">{{crop.name}}</h5>
+          <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="90" Cheight="20"></app-skeleton-loader>
+          <p *ngIf="loaded" class="card-text">{{crop.type}}</p>
+          <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="90" Cheight="20"></app-skeleton-loader>
+          <p *ngIf="loaded" class="card-text">Qty. - {{crop.quantity}} Kgs.</p>
+          <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+          <p *ngIf="loaded" class="card-text">{{crop.location}}</p>
+        </div>
+        <div class="card-footer text-muted">
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <ng-template #elseBlock>
+    <div class="card">
+      <div class="card-header">
+        No crops subscribed by you
+      </div>
+    </div>
+  </ng-template>
+</div>

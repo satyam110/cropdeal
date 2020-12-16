@@ -10,10 +10,7 @@ module.exports.getFarmers = function(req,res,next){
         .select('_id name email phone role description bank_details')
         .exec().then(result => {
         if(result){
-            res.status(203).json({
-                totalFarmers : result.length,
-                farmers:result
-            })
+            res.status(203).json(result)
         } else {
             res.status(500).json({
                 message:'No farmers registered yet',

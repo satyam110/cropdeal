@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   loginUserData = {type:"default",email:"",password:""}
   errorMsg="";
   typeHasError=true;
-
+  clicked=false
   constructor(private auth:AuthService, private _router:Router) { }
 
   ngOnInit(): void {
@@ -29,13 +29,13 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('currentUser',res.id)
             localStorage.setItem('role',res.role)
             localStorage.setItem('email',res.email)
-            this._router.navigate([`/dashboard/${res.id}`])
+            this._router.navigate([`/dashboard/${res.id}/profile`])
           },
           err => {
             if (err instanceof HttpErrorResponse){
               if(err.status === 401 || err.status === 403){
                 this.errorMsg="Login Failed"
-                this.loginUserData={type:"",email:"",password:""}
+                this.loginUserData={type:"default",email:"",password:""}
               }
             }
           }

@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-6 mb-3" *ngFor="let invoice of invoices">
+      <div class="card text-justify">
+        <div class="card-header">
+          <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="300" Cheight="50"></app-skeleton-loader>
+          <h6 *ngIf="loaded"class="card-title">Transaction ID : {{invoice.txn_id}}</h6>
+        </div>
+        <div class="card-body">
+          <app-skeleton-loader *ngIf="!loaded" class="mt-2 d-flex justify-content-center" Cwidth="300" Cheight="30"></app-skeleton-loader>
+          <h6 *ngIf="loaded"class="card-text">Seller: {{invoice.seller}}</h6>
+          <app-skeleton-loader *ngIf="!loaded" class="mt-2 d-flex justify-content-center" Cwidth="300" Cheight="30"></app-skeleton-loader>
+          <h6 *ngIf="loaded"class="card-text">Buyer: {{invoice.buyer}}</h6>
+          <app-skeleton-loader *ngIf="!loaded" class="mt-2 d-flex justify-content-center" Cwidth="300" Cheight="30"></app-skeleton-loader>
+          <h6 *ngIf="loaded"class="card-text">Crop Name: {{invoice.productName}}</h6>
+          <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="200" Cheight="30"></app-skeleton-loader>
+          <p *ngIf="loaded" class="card-text">Type: {{invoice.type}}</p>
+          <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="200" Cheight="30"></app-skeleton-loader>
+          <p *ngIf="loaded" class="card-text">Purchased Quantity: {{invoice.quantity}} Kgs.</p>
+          <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="200" Cheight="30"></app-skeleton-loader>
+          <p *ngIf="loaded" class="card-text">Price per Kg: {{invoice.totalCost/invoice.quantity | currency:'INR'}}</p>
+          <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="200" Cheight="30"></app-skeleton-loader>
+          <p *ngIf="loaded" class="card-text">Total: {{invoice.totalCost | currency:'INR'}}</p>
+        </div>
+        <div class="card-footer text-muted">
+          <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="200" Cheight="30"></app-skeleton-loader>
+          <p *ngIf="loaded" class="card-text">Date of Purchase: {{invoice.createdAt | date}} | Time: {{invoice.createdAt | date:'shortTime'}}</p>
+          <a routerLink="../invoice/{{invoice._id}}" class="btn btn-primary">View Invoice</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

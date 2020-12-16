@@ -14,23 +14,73 @@
       </div>
 </div> -->
 <div class="container">
-  <div class="row mt-5">
-    <div class="col-md-6 mb-3 mx-auto">
+  <div *ngIf="!editable" class="row mt-5">
+    <div class="col-md-7 mb-3 mx-auto">
       <div class="card">
         <div class="card-header">
-         <h4>{{user.name}}&apos;s Profile</h4>
+          <div class="row">
+            <div class="col-md-10">
+              <app-skeleton-loader *ngIf="!loaded" Cwidth="250" Cheight="50"></app-skeleton-loader>
+              <h4 *ngIf="loaded" class="w-75 p-3">{{user.name}}&apos;s Profile</h4>
+            </div>
+            <div class="col-md-2 mt-3 float-right">
+              <app-skeleton-loader *ngIf="!loaded" Cwidth="30" Cheight="30"></app-skeleton-loader>
+              <button *ngIf="loaded" (click)="editable=true" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+            </div>
+          </div>
         </div>
         <div class="card-body text-center">
           <div class="card-image">
-            <img src="https://uwe-repository.worktribe.com/img/user.svg" height="20%" width="20%" />
+
+              <app-skeleton-loader class="d-flex justify-content-center" *ngIf="!loaded" Cwidth="90" Cheight="90" circle="true"></app-skeleton-loader>
+            <img *ngIf="loaded" src="https://uwe-repository.worktribe.com/img/user.svg" height="20%" width="20%" />
           </div>
-          <h5 class="card-title">Name : {{user.name}}</h5>
-          <p class="card-text"><i class="fa fa-envelope" aria-hidden="true"></i> {{user.email}}</p>
-          <p class="card-text"><i class="fa fa-phone" aria-hidden="true"></i> {{user.phone}}</p>
+          <app-skeleton-loader class="mt-1" *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="300" Cheight="30"></app-skeleton-loader>
+          <h5 *ngIf="loaded" class="card-title">Name : {{user.name}}</h5>
+          <app-skeleton-loader class="mt-1" *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="300" Cheight="30"></app-skeleton-loader>
+          <p *ngIf="loaded" class="card-text"><i class="fa fa-envelope" aria-hidden="true"></i> {{user.email}}</p>
+          <app-skeleton-loader class="mt-1" *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="300" Cheight="30"></app-skeleton-loader>
+          <p *ngIf="loaded" class="card-text"><i class="fa fa-phone" aria-hidden="true"></i> {{user.phone}}</p>
           <!-- <p class="card-text"><i class="fa fa-star"></i><i class="fa fa-star "></i><i class="fa fa-star "></i><i class="fa fa-star-o "></i><i class="fa fa-star-o "></i></p> -->
           <div class="card-footer">
-            <p class="card-text">Description : {{user.description}}</p>
+            <app-skeleton-loader class="d-flex justify-content-center mt-1" *ngIf="!loaded" Cwidth="300" Cheight="40"></app-skeleton-loader>
+            <p *ngIf="loaded" class="card-text">Description : {{user.description}}</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="editable" class="row pt-5 pb-5">
+    <div class="col-md-8 mx-auto">
+      <div class="card rounded-0">
+        <div class="card-header bg-light">
+          <h3 class="mb-0">Update Profile</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="profileForm" novalidate (ngSubmit)="updateProfile()"  class="form">
+              <div class="form-group">
+                <label for="">Name</label>
+                <input type="text" class="form-control" formControlName="name">
+              </div>
+
+              <div class="form-group">
+                <label for="">Email</label>
+                <input type="email" class="form-control" formControlName="email">
+              </div>
+
+              <div class="form-group">
+                <label for="">Phone</label>
+                <input type="number" class="form-control" formControlName="phone">
+              </div>
+
+              <div class="form-group">
+                <label for="">Description</label>
+                <input type="text" class="form-control" formControlName="description">
+              </div>
+            <button class="btn btn-warning ml-2">Update</button>
+            <button class="btn btn-warning ml-2" (click)="editable=false">Close</button>
+          </form>
         </div>
       </div>
     </div>

@@ -36,6 +36,14 @@ module.exports.isAdmin = function(req,res,next){
     }
 }
 
+module.exports.isDealer = function(req,res,next){
+    if(req.user.role ==='dealer'){
+        next()
+    } else {
+        return res.status(401).json({error:'Not a Dealer Account'});
+    }
+}
+
 
 
 

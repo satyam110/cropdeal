@@ -1,21 +1,188 @@
-<div class="container">
-  <button class="btn btn-primary mt-3" (click)="back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-  <div class="row mt-5">
-    <div class="col-md-12 mb-3">
-      <div class="card text-center">
-        <div class="card-body">
-          <h5 class="card-title">Crop name : {{crop.name}}</h5>
-          <p class="card-text">Type : {{crop.type}}</p>
-          <p class="card-text">Qty. : {{crop.quantity}} Kgs.</p>
-          <p class="card-text">Address : {{crop.location}}</p>
-          <p class="card-text">Uploaded by : {{crop.farmerName}}</p>
-          <p class="card-text">Phone : {{crop.farmerPhone}}</p>
-          <p class="card-text">About Farmer : {{crop.description}}</p>
+<div class="container mb-5">
+  <button class="btn btn-primary mt-3" *ngIf="!buy" (click)="back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+  <button class="btn btn-primary mt-3" *ngIf="buy" (click)="buy=false"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+
+  <div *ngIf="!buy && !showSuccess" class="row bg-light p-5 mt-2">
+    <div class="col-md-8">
+      <app-skeleton-loader *ngIf="!loaded" Cwidth="550" Cheight="350"></app-skeleton-loader>
+          <div class="crop-image">
+            <img *ngIf="loaded" class="card-img-top " [src]="crop.imgUrl" [alt]="crop.name">
+          </div>
+    </div>
+
+    <div class="col-md-4">
+        <h1 class="bg-light p-2">
+          <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="300" Cheight="50"></app-skeleton-loader>
+          <h5 *ngIf="loaded" class="card-title font-weight-bold">Product : {{crop.name}}</h5>
+          <h6 *ngIf="loaded"> Product Details: </h6>
+        </h1>
+        <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="300" Cheight="50"></app-skeleton-loader>
+        <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="300" Cheight="50"></app-skeleton-loader>
+        <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="300" Cheight="50"></app-skeleton-loader>
+        <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="300" Cheight="50"></app-skeleton-loader>
+        <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="300" Cheight="50"></app-skeleton-loader>
+      <div *ngIf="loaded" id="accordion">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button class="btn btn-light font-weight-bold" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Crop Type
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+              <p  *ngIf="loaded" class="card-text">{{crop.type}}</p>
+            </div>
+          </div>
         </div>
-        <div class="card-footer text-muted">
-          <a routerLink="#" class="btn btn-success">Buy</a>
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+              <button class="btn btn-light collapsed font-weight-bold" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Quantity
+              </button>
+            </h5>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+              <p  *ngIf="loaded" class="card-text">{{crop.quantity}} Kgs.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+              <button class="btn btn-light collapsed font-weight-bold" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Location
+              </button>
+            </h5>
+          </div>
+          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+              <p  *ngIf="loaded" class="card-text">{{crop.location}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+              <button class="btn btn-light collapsed font-weight-bold" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                Farmer Name
+              </button>
+            </h5>
+          </div>
+          <div id="collapseFour" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+              <p  *ngIf="loaded" class="card-text">{{crop.farmerName}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+              <button class="btn btn-light collapsed font-weight-bold" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                Farmer Phone
+              </button>
+            </h5>
+          </div>
+          <div id="collapseFive" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+              <p  *ngIf="loaded" class="card-text">{{crop.farmerPhone}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+              <button class="btn btn-light collapsed font-weight-bold" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                About Farmer
+              </button>
+            </h5>
+          </div>
+          <div id="collapseSix" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+              <p  *ngIf="loaded" class="card-text">{{crop.description}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+              <button class="btn btn-light collapsed font-weight-bold" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                Cost
+              </button>
+            </h5>
+          </div>
+          <div id="collapseSeven" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+              <p  *ngIf="loaded" class="card-text">{{crop.cost | currency:'INR'}}/Kg.</p>
+            </div>
+          </div>
         </div>
       </div>
+          <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+          <button *ngIf="loaded && currentRole==='dealer'" (click)="buy=true; setCost(crop.cost)" class="btn mt-4 btn-success float-right">Buy</button>
+    </div>
+
+  </div>
+
+<!--Stripe Payment Page-->
+  <div *ngIf="buy && !showSuccess" class="row bg-light p-4 m-5">
+    <div class="col-md-6 mx-auto">
+      <h2 class="text-center">Payment</h2>
+      <form novalidate (ngSubmit)="createToken()" class="form" [formGroup]="stripeTest">
+        <div class="form-group">
+          <label for="">Quantity (in Kgs.)</label>
+          <input type="number" #quantity formControlName="quantity" (change)="calculate(quantity.value)" class="form-control" placeholder="Quantity in KGs">
+        </div>
+        <div class="form-group">
+          <label for="">Total Cost (Per Kg cost is {{cost|currency:'INR'}})</label>
+          <input type="number" formControlName="amount" class="form-control" placeholder="Total Amount">
+        </div>
+        <div class="form-group">
+          <label for="">Cardholder Name</label>
+          <input type="text" formControlName="name" class="form-control" placeholder="Enter Your Name">
+        </div>
+        <div class="form-group">
+          <label for="">Credit Card / Debit Card</label>
+          <ngx-stripe-card class="form-control"
+          [options]="cardOptions"
+          [elementsOptions]="elementsOptions"></ngx-stripe-card>
+        </div>
+        <div *ngIf="pay && !showSuccess" class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div *ngIf="failMsg!==''">
+          <span class="text-danger">{{failMsg}}</span>
+        </div>
+        <button type="submit" (click)="pay=true" class="btn btn-success btn-lg float-right">
+          PAY
+        </button>
+      </form>
     </div>
   </div>
+<!--Stripe Payment Page-->
+
+
+  <div *ngIf="showSuccess && !showFailure" class="jumbotron text-center mt-4 mb-4">
+    <div class="d-flex justify-content-center" ><i class="fa fa-check-circle" style="font-size:54px;color:green" aria-hidden="true"></i></div>
+    <h1 class="display-3">Thank You!</h1>
+    <p class="lead"><strong>Payment Processed Successfully with transaction ID <span class="text-success">{{txn_id}}</span></strong></p>
+    <hr>
+    <p class="lead">
+      <a class="btn btn-primary btn-sm" routerLink="/dashboard/{{currentUser}}/invoices" (click)="buy=false;pay=false" role="button">Continue</a>
+    </p>
+  </div>
+  <div *ngIf="showFailure && !showSuccess" class="jumbotron text-center mt-4 mb-4">
+    <div class="d-flex justify-content-center" ><i class="fa fa-times" style="font-size:54px;color:red" aria-hidden="true"></i></div>
+    <h1 class="display-3">Payment Failed!</h1>
+    <p class="lead"><strong>Something went wrong while processing your payment. Please try again later.</strong></p>
+    <hr>
+    <p class="lead">
+      <a class="btn btn-primary btn-sm" routerLink="/home" (click)="buy=false;pay=false" role="button">Continue to homepage</a>
+    </p>
+  </div>
 </div>
+

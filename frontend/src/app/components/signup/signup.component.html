@@ -15,15 +15,26 @@
             </div>
             <div class="form-group">
               <label for="">Email</label>
-              <input type="email" #email="ngModel" [class.is-invalid]="email.invalid && email.touched" class="form-control rounded-0"
-                      [(ngModel)]="registerUserData.email" name="email" required>
-              <small class="text-danger" [class.d-none]="email.valid || email.untouched">Please enter email </small>
+              <input type="email" #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"  [class.is-invalid]="email.invalid && email.touched || errorMsg" class="form-control rounded-0"
+                      [(ngModel)]="registerUserData.email" name="email" (change)="errorMsg=''" required>
+              <!-- <small class="text-danger" [class.d-none]="email.valid || email.untouched">Please enter email </small> -->
+              <div *ngIf="email.errors && email.invalid && email.touched">
+                <small class="text-danger" *ngIf="email.errors.required">Email is required</small>
+                <small class="text-danger" *ngIf="email.errors.pattern">Invalid Email</small>
+              </div>
+              <div *ngIf="errorMsg!==''">
+                <small class="text-danger">{{errorMsg}}</small>
+              </div>
             </div>
             <div class="form-group">
               <label for="">Phone</label>
-              <input type="number" maxlength="10" #phone="ngModel" [class.is-invalid]="phone.invalid && phone.touched" class="form-control rounded-0"
+              <input type="number" #phone="ngModel" pattern="^\d{10}$" [class.is-invalid]="phone.invalid && phone.touched" class="form-control rounded-0"
                       [(ngModel)]="registerUserData.phone" name="phone" required>
-              <small class="text-danger" [class.d-none]="phone.valid || phone.untouched">Please enter phone details</small>
+              <!-- <small class="text-danger" [class.d-none]="phone.valid || phone.untouched">Please enter 10 digit phone number</small> -->
+              <div *ngIf="phone.errors && phone.invalid && phone.touched">
+                <small class="text-danger" *ngIf="phone.errors.required">Phone number is required</small>
+                <small class="text-danger" *ngIf="phone.errors.pattern">Phone number must be 10 digit</small>
+              </div>
             </div>
             <div class="form-group">
               <label for="">Password</label>

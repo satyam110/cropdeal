@@ -1,0 +1,174 @@
+<div class="row pt-5">
+
+  <div class="col-md-10 mx-auto">
+    <div *ngIf="approved" class="alert alert-success alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Crop Approved!</strong>
+    </div>
+    <div *ngIf="deleted" class="alert alert-danger alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Crop Deleted!</strong>
+    </div>
+    <div *ngIf="crops.length===0" class="card">
+      <div class="card-header text-center">
+        <div class="card-title">
+          <h4>
+            No crops under review currently
+          </h4>
+      </div>
+      </div>
+    </div>
+    <div *ngIf="crops.length>0" class="card">
+      <div class="card-header text-center">
+        <h4>
+          Crops under review on portal
+        </h4>
+      </div>
+      <div class="card-body table-responsive">
+        <table class="table table-hover">
+          <tr>
+            <th>
+              ID
+            </th>
+            <th>
+              Name
+            </th>
+            <th>
+              Type
+            </th>
+            <th>
+              Quantity
+            </th>
+            <th>
+              Location
+            </th>
+            <th>
+              Farmer&apos;s ID
+            </th>
+            <th>
+              Action
+            </th>
+          </tr>
+          <tr *ngFor="let crop of crops">
+            <td>
+              <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+              <span *ngIf="loaded">{{crop._id}} </span>
+            </td>
+            <td>
+              <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+              <span *ngIf="loaded">{{crop.name}} </span>
+            </td>
+            <td>
+              <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+              <span *ngIf="loaded"> {{crop.type}} </span>
+            </td>
+            <td>
+              <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+              <span *ngIf="loaded"> {{crop.quantity}} </span>
+            </td>
+            <td>
+              <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+              <span *ngIf="loaded"> {{crop.location}} </span>
+            </td>
+            <td>
+              <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+              <span *ngIf="loaded"> {{crop.uploader}} </span>
+            </td>
+            <td>
+              <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="40" Cheight="40"></app-skeleton-loader>
+              <button *ngIf="loaded" (click)="approveCrop(crop._id)" class="btn btn-success btn-sm mr-1"><i class="fa fa-check" aria-hidden="true"></i></button>
+              <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="40" Cheight="40"></app-skeleton-loader>
+              <button *ngIf="loaded" (click)="cropId=crop._id" type="button" data-toggle="modal" data-target="#deleteModalCenter" class="btn btn-danger btn-sm ml-1"><i class="fa fa-times" aria-hidden="true"></i></button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-10 mt-4 mb-4 mx-auto">
+    <div class="card">
+      <div class="card-header text-center">
+        <h4>
+          Approved Crops on Portal
+        </h4>
+      </div>
+      <div class="card-body table-responsive">
+        <table class="table table-hover">
+          <tr>
+            <th>
+              ID
+            </th>
+            <th>
+              Name
+            </th>
+            <th>
+              Type
+            </th>
+            <th>
+              Quantity
+            </th>
+            <th>
+              Location
+            </th>
+            <th>
+              Farmer&apos;s ID
+            </th>
+            <th>
+              Action
+            </th>
+          </tr>
+          <tr *ngFor="let crop of approvedCrops">
+            <td>
+              <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+              <span *ngIf="loaded">{{crop._id}} </span>
+            </td>
+            <td>
+              <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+              <span *ngIf="loaded">{{crop.name}} </span>
+            </td>
+            <td>
+              <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+              <span *ngIf="loaded"> {{crop.type}} </span>
+            </td>
+            <td>
+              <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+              <span *ngIf="loaded"> {{crop.quantity}} </span>
+            </td>
+            <td>
+              <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+              <span *ngIf="loaded"> {{crop.location}} </span>
+            </td>
+            <td>
+              <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+              <span *ngIf="loaded"> {{crop.uploader}} </span>
+            </td>
+            <td>
+              <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="40" Cheight="40"></app-skeleton-loader>
+              <button *ngIf="loaded" (click)="cropId=crop._id" type="button" data-toggle="modal" data-target="#deleteModalCenter" class="btn btn-danger btn-sm ml-1"><i class="fa fa-times" aria-hidden="true"></i></button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="deleteModalCenter" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Do you really want to delete these records? This process cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="deleteCrop(cropId)" data-dismiss="modal" class="btn btn-danger">Yes, Delete it</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

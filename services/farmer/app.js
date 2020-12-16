@@ -4,6 +4,29 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const farmerRoute = require('./routes/farmer');
 const cors = require('cors');
+//swagger
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUI = require('swagger-ui-express');
+
+const swaggerOptions = {
+    swaggerDefinition: {
+       info:{
+           title: 'Farmer Microservice API',
+           version: '1.0.0',
+           description: 'API for managing farmer operations in application',
+           contact: {
+               name: 'Satyam Pawar',
+               email: 'satyamp110@gmail.com'
+           }
+       } ,
+       servers: ["http://localhost:3000"]
+    },
+    apis: ['./routes/*.js']
+}
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+// swagger 
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 // middleware
 app.use(morgan('dev'));
 app.use(express.json());

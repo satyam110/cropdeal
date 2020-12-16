@@ -1,0 +1,8 @@
+.crop-image{
+  width: 100%;
+}
+
+.crop-image img{
+  width: 100%;
+  height: 250px;
+}

@@ -1,12 +1,32 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
-const cors = require('cors');
 const mongoose = require('mongoose');
 const dealerRoutes = require('./routes/dealer.route');
+const cors = require('cors');
+//swagger
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUI = require('swagger-ui-express');
 
-require('dotenv').config();
+const swaggerOptions = {
+    swaggerDefinition: {
+       info:{
+           title: 'Dealer Microservice API',
+           version: '1.0.0',
+           description: 'API for managing dealer operations in application',
+           contact: {
+               name: 'Satyam Pawar',
+               email: 'satyamp110@gmail.com'
+           }
+       } ,
+       servers: ["http://localhost:3002"]
+    },
+    apis: ['./routes/*.js']
+}
 
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+// swagger 
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 // middleware
 app.use(morgan('dev'));
 app.use(express.json());

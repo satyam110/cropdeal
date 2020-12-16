@@ -2,6 +2,7 @@ const Dealer = require("../models/dealer.model");
 const bcrypt = require("bcrypt");
 require('dotenv').config();
 const jwt = require("jsonwebtoken");
+const axios = require('axios');
 
 module.exports.getDealers = function(req,res,next){
     Dealer.find({})
@@ -9,15 +10,12 @@ module.exports.getDealers = function(req,res,next){
         .exec()
         .then(result => {
         if(result.length>0){
-            res.status(203).json({
-                totalDealers : result.length,
-                dealers:result
-            })
+            res.status(203).json(result)
         } else {
-            res.status(500).json({
-                message:'No farmers registered yet',
+            res.status(400).json({
+                message:'No dealers registered yet',
                 method:'POST',
-                url:'http://localhost:3000/dealer/signup'
+                url:'http://localhost:3002/dealer/signup'
             })
         }
     }).catch(err => {
@@ -28,7 +26,7 @@ module.exports.getDealers = function(req,res,next){
 
 module.exports.getDealerProfile = function (req, res, next) {
   Dealer.findById(req.params.id)
-    .select("name email phone description _id bank_details payment_details role")
+    .select("name email phone description _id bank_details payment_details role crops_subscribed")
     .then((data) => {
       if (data) {
         res.status(201).json(data);
@@ -42,7 +40,7 @@ module.exports.getDealerProfile = function (req, res, next) {
 }
 
 module.exports.dealerSignUp = function (req, res, next) {
-  const { name, email, phone, password, description, role, bank_details, payment_details } = req.body;
+  const { name, email, phone, password, description, role, bank_details, payment_details, crops_subscribed } = req.body;
 
   Dealer.find({ email: email })
     .exec()
@@ -64,7 +62,8 @@ module.exports.dealerSignUp = function (req, res, next) {
               description: description,
               role:role,
               bank_details:bank_details,
-              payment_details:payment_details
+              payment_details:payment_details,
+              crops_subscribed
             });
 
             dealer
@@ -73,7 +72,7 @@ module.exports.dealerSignUp = function (req, res, next) {
                 res.status(201).json(dealer);
               })
               .catch((err) => {
-                res.status(500).json({
+                res.status(400).json({
                   error: err,
                 });
               });
@@ -148,7 +147,7 @@ module.exports.updateDealerProfile = function (req,res,next) {
           res.status(200).json({
             message:"Update Successful",
             method:"GET",
-            url:"http://localhost:3000/farmer/profile/"+id
+            url:"http://localhost:3002/dealer/profile/"+id
           })
         }).catch((err) => {
           res.status(404).json({
@@ -169,12 +168,51 @@ module.exports.deleteDealerProfile = function (req, res, next) {
       });
     })
     .catch((err) => {
-      res.status(500).json({
+      res.status(404).json({
         error: err,
       });
     });
 };
 
+module.exports.subscribeCrop = function(req,res,next){
+  const id = req.params.id;
+
+  Dealer.findOne({_id:id})
+        .then((dealer) => {
+          dealer.crops_subscribed.push(req.body.crop);
+          dealer.save().then(res.status(200).json(dealer))
+        })
+        .catch((err)=>{
+          res.status(401).json({
+            error:"Error occured, "+err
+          })
+        })
+}
+
+
+module.exports.getCropsSubscribed = function(req,res,next){
+  const id = req.params.id;
+  Dealer.findOne({_id:id})
+        .then(dealer => {
+          const url = 'http://localhost:3001/crops/dealer'
+          axios.post(url ,{
+            cropsSubscribed: dealer.crops_subscribed
+            } , {
+            headers: {
+              'Authorization': req.headers.authorization
+            }}).then(result =>{
+            res.status(200).json(result.data);
+          }).catch(err => {
+            res.status(400).json({
+              error:"Error occured in axios, "+err
+            })
+          })
+        }).catch(err => {
+          res.status(400).json({
+            error:"Error occured, "+err
+          })
+        })
+}
 // module.exports.verifyToken = function (req, res, next) {
 //   const url = "http://localhost:3003/auth/verify";
 //   const payload = {

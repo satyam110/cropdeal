@@ -2,7 +2,7 @@
   overflow-x: hidden;
 }
 body{
-  background-color: rgb(185, 238, 169);
+  background-color: #ccedd2;
 }
 #sidebar-wrapper {
 min-height: 90vh;
@@ -16,8 +16,8 @@ a{
   cursor: pointer;
 }
 #sidebar-wrapper .sidebar-heading {
-padding: 0.875rem 1.25rem;
-font-size: 1.2rem;
+padding: 0.875rem 1rem;
+font-size: 1rem;
 }
 
 #sidebar-wrapper .list-group {

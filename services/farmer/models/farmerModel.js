@@ -30,13 +30,16 @@ const farmerSchema = new mongoose.Schema({
     },
     bank_details:{
         bank_name:{
-            type:String
+            type:String,
+            default:''
         },
         acc_no:{
-            type:Number
+            type:Number,
+            defualt:null
         },
         ifsc_code:{
-            type:String
+            type:String,
+            default:''
         }
     }
 });

@@ -20,4 +20,18 @@ export class ProfileService {
     }
   }
 
+  updateProfileDetails(id,role,data){
+    if(role === 'farmer'){
+      return this.http.put<any>(`${this._farmerUrl}/${id}`,data);
+    } else {
+      return this.http.put<any>(`${this._dealerUrl}/${id}`,data);
+    }
+  }
+
+  updatePaymentDetails(id,role,data){
+    if(role === 'dealer'){
+      return this.http.put<any>(`${this._dealerUrl}/${id}`,data);
+    }
+  }
+
 }

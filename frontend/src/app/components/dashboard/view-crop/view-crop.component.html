@@ -1,21 +1,103 @@
 <div class="container">
 
     <div  *ngIf="crops.length > 0;else elseBlock">
-      <div class="row mt-5">
-      <div class="col-md-6" *ngFor="let crop of crops">
-        <div class="card text-center">
+      <div *ngIf="success" class="alert alert-success alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Crop Details updated</strong>
+      </div>
+      <div *ngIf="deleted" class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Deleted Crop Details</strong>
+      </div>
+      <div *ngIf="!editable" class="row mt-5">
+      <div class="col-md-4" *ngFor="let crop of crops">
+        <div class="card text-center mt-2">
           <div class="card-body">
-            <h5 class="card-title">{{crop.name}}</h5>
-            <p class="card-text">{{crop.type}}</p>
-            <p class="card-text">Qty. - {{crop.quantity}} Kgs.</p>
-            <p class="card-text">{{crop.location}}</p>
+            <app-skeleton-loader *ngIf="!loaded" Cwidth="300" Cheight="250"></app-skeleton-loader>
+            <div class="crop-image">
+              <img *ngIf="loaded" class="card-img-top " [src]="crop.imgUrl" [alt]="crop.name">
+            </div>
+            <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+            <h5 *ngIf="loaded" class="card-title">{{crop.name}}</h5>
+            <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="90" Cheight="20"></app-skeleton-loader>
+            <p *ngIf="loaded" class="card-text">{{crop.type}}</p>
+            <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="90" Cheight="20"></app-skeleton-loader>
+            <p *ngIf="loaded" class="card-text">Qty. - {{crop.quantity}} Kgs.</p>
+            <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center" Cwidth="100" Cheight="30"></app-skeleton-loader>
+            <p *ngIf="loaded" class="card-text">{{crop.location}}</p>
           </div>
           <div class="card-footer text-muted">
+            <button class="btn btn-primary btn-md mr-2" (click)=" editable=true; loadCropDetails(crop._id)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+            <button class="btn btn-danger btn-md ml-2" (click)="deleteCrop(crop._id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
           </div>
         </div>
       </div>
     </div>
+    <div *ngIf="editable" class="row pt-5 pb-5">
+      <div class="col-md-8 mx-auto">
+        <div class="card rounded-0">
+          <div class="card-header bg-light">
+            <h3 class="mb-0">Update Crop Details</h3>
+          </div>
+          <div class="card-body">
+            <!-- {{cropForm.value | json}} -->
+            <form [formGroup]='cropForm' novalidate (ngSubmit)="updateCrop()" class="form">
+              <div class="form-group">
+                <label for="">Name</label>
+                <input type="text" [class.is-invalid]="cropForm.get('name').invalid && cropForm.get('name').touched" class="form-control rounded-0"
+                        formControlName="name" name="name" required>
+                 <small class="text-danger" [class.d-none]="cropForm.get('name').valid || cropForm.get('name').untouched">Name is required</small>
+              </div>
+              <div class="form-group">
+                <label for="">Crop Type</label>
+                <select class="custom-select" name="type" formControlName="type" >
+                  <option value="default">Select Crop Type</option>
+                  <option value="Vegetable">Vegetable</option>
+                  <option value="Fruit">Fruits</option>
+                  <option value="Grain">Grain</option>
+                </select>
+              <!-- <small class="text-danger" [class.d-none]="!typeHasError">Type is required</small> -->
+              </div>
+              <!-- <div class="form-group">
+                <label for="">Select Image</label>
+                <button class="btn btn-primary ml-2 btn-md" type="button" (click)="filePicker.click()"><i class="fa fa-upload" aria-hidden="true"></i></button>
+                <input type="file" #filePicker (change)="onImageSelected($event)" accept=".jpg, .png, .jpeg">
+              </div>
+              <div class="image-preview" *ngIf="url !== '' && url">
+                <img [src]="url" [alt]="cropForm.value.name">
+              </div> -->
+              <div class="form-group">
+                <label for="">Quantity (Kgs.)</label>
+                <input type="number"  [class.is-invalid]="cropForm.get('quantity').invalid && cropForm.get('quantity').touched" class="form-control rounded-0"
+                       formControlName="quantity" name="quantity">
+                 <small class="text-danger" [class.d-none]="cropForm.get('quantity').valid || cropForm.get('quantity').untouched">Quantity is required</small>
+              </div>
+              <div class="form-group">
+                <label for="">Location</label>
+                <input type="text" formControlName="location" [class.is-invalid]="cropForm.get('location').invalid && cropForm.get('location').touched"
+                        class="form-control rounded-0" name="location">
+                 <small class="text-danger" [class.d-none]="cropForm.get('location').valid || cropForm.get('location').untouched">Location is required</small>
+              </div>
+              <div class="form-group">
+                <label for="">Cost (/Kgs.)</label>
+                <input type="number" formControlName="cost" [class.is-invalid]="cropForm.get('cost').invalid && cropForm.get('cost').touched" class="form-control rounded-0" name="cost" >
+                 <small class="text-danger" [class.d-none]="cropForm.get('cost').valid || cropForm.get('cost').untouched">Cost is required</small>
+              </div>
+              <button  class="btn btn-primary mr-2">Update Details</button>
+              <button  class="btn btn-warning ml-2" (click)="editable=false">Cancel</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-    <ng-template #elseBlock>No Crops Uploaded Yet</ng-template>
+
+    </div>
+    <ng-template #elseBlock>
+      <div class="card">
+        <div class="card-header">
+          No crops added by you
+        </div>
+      </div>
+    </ng-template>
 </div>
 

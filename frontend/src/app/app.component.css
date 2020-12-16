@@ -1,3 +1,11 @@
 nav.bg-green{
-  background-color: #18A558;
+  background-color: #21bf73;
+}
+
+footer{
+  background-color: #343a40;
+}
+footer.footer {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }

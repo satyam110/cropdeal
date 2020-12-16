@@ -29,35 +29,44 @@ const dealerSchema = new mongoose.Schema({
         type:String,
         default:"dealer"
     },
-    
-    
     bank_details:{
         acc_no:{
-            type:Number
+            type:Number,
+            default:null
         },
         bank_name:{
-            type:String
+            type:String,
+            default:''
         },
         ifsc_code:{
-            type:String
+            type:String,
+            default:''
         }
     },
-
     payment_details:{
         card_type:{
+            default:'',
             type:String,
         },
         card_number:{
             type:Number,
+            default:null,
             minlength:[16, 'Invlid Card Number']
         },
         expiry:{
-            type:Date
+            type:String,
+            default:''
         },
         cvv:{
-            type:Number,
+            type:String,
+            default:'',
             minlength:[3, 'Invalid CVV']
         }
+    },
+
+    crops_subscribed:{
+        type:[String],
+        default:[]
     }
     
     

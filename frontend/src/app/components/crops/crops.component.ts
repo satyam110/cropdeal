@@ -13,12 +13,17 @@ import { CropsService } from '../../services/crops.service';
 export class CropsComponent implements OnInit {
 
   crops=[]
+  loaded=false
   constructor(private _authService:AuthService,private _cropsService:CropsService, private _router: Router, private location:Location) { }
 
   ngOnInit(): void {
     this._cropsService.getCrops()
         .subscribe(
-          res => this.crops=res,
+          res => {  this.crops=res,
+            setInterval(() => {
+              this.loaded=true
+            },500);
+          },
           err => {
             if (err instanceof HttpErrorResponse){
               if(err.status === 401 || err.status === 403){

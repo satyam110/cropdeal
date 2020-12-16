@@ -1,0 +1,84 @@
+<div class="d-flex justify-content-center p-0 m-0">
+  <button (click)="downloadPDF()" class="btn btn-primary"><i class="fa fa-download" aria-hidden="true"></i></button>
+</div>
+<div #receipt id="receipt" class="offset-xl-2 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 padding">
+  <div class="card">
+      <div class="card-header p-4">
+          <a class="pt-2 d-inline-block" data-abc="true">CropDeal.com</a>
+          <div class="float-right">
+              <h3 class="mb-0">Invoice #{{invoice._id}}</h3>
+              Date: {{invoice.createdAt | date}}
+              | Time: {{invoice.createdAt | date:'shortTime'}}
+              <p>Transaction ID: {{invoice.txn_id}}</p>
+          </div>
+      </div>
+      <div class="card-body">
+          <div class="row mb-4">
+              <div class="col-sm-6">
+                  <h6 class="mb-3">From:</h6>
+                  <h3 class="text-dark mb-1">{{invoice.sellerName}}</h3>
+                  <div>Email: {{invoice.sellerEmail}}</div>
+                  <div>Phone: +91 {{invoice.sellerPhone}}</div>
+              </div>
+              <div class="col-sm-6 ">
+                  <h6 class="mb-3">To:</h6>
+                  <h3 class="text-dark mb-1">{{invoice.buyerName}}</h3>
+                  <div>Email: {{invoice.buyerEmail}}</div>
+                  <div>Phone: +91 {{invoice.buyerPhone}}</div>
+              </div>
+          </div>
+          <div class="table-responsive-sm">
+              <table class="table table-striped">
+                  <thead>
+                      <tr>
+                          <th class="center">#</th>
+                          <th>Item</th>
+                          <th>Type</th>
+                          <th class="right">Price</th>
+                          <th class="center">Qty</th>
+                          <th class="right">Total</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td class="center">1</td>
+                          <td class="left strong">{{invoice.productName}}</td>
+                          <td class="left">{{invoice.type}}</td>
+                          <td class="right">{{invoice.totalCost/invoice.quantity | currency:'INR'}}</td>
+                          <td class="center">{{invoice.quantity}}</td>
+                          <td class="right">{{invoice.totalCost | currency:'INR'}}</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+          <div class="row">
+              <div class="col-lg-4 col-sm-5">
+              </div>
+              <div class="col-lg-4 col-sm-5 ml-auto">
+                  <table class="table table-clear">
+                      <tbody>
+                          <tr>
+                              <td class="left">
+                                  <strong class="text-dark">Subtotal</strong>
+                              </td>
+                              <td class="right">{{invoice.totalCost | currency:'INR'}}</td>
+                          </tr>
+                          <tr>
+                              <td class="left">
+                                  <strong class="text-dark">Total</strong> </td>
+                              <td class="right">
+                                  <strong class="text-dark">{{invoice.totalCost | currency:'INR'}}</strong>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+      <div class="card-footer bg-white">
+          <p class="mb-0">&reg;CropDeal 2020</p>
+      </div>
+  </div>
+</div>
+
+
