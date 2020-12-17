@@ -46,12 +46,11 @@ const dealerSchema = new mongoose.Schema({
     payment_details:{
         card_type:{
             default:'',
-            type:String,
+            type:String
         },
         card_number:{
             type:Number,
-            default:null,
-            minlength:[16, 'Invlid Card Number']
+            default:null
         },
         expiry:{
             type:String,
@@ -59,8 +58,7 @@ const dealerSchema = new mongoose.Schema({
         },
         cvv:{
             type:String,
-            default:'',
-            minlength:[3, 'Invalid CVV']
+            default:''
         }
     },
 

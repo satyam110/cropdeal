@@ -115,7 +115,11 @@ module.exports.deleteCropById = function (req, res, next) {
   Crop.findOneAndDelete({ _id: id })
     .exec()
     .then((data) => {
-      res.status(200).json(data);
+      if(data){
+        res.status(200).json(data);
+      } else {
+        res.status(404).json({error:"Cannot fetch entry with that ID"});
+      }
     })
     .catch((err) => {
       res.status(400).json({

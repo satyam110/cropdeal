@@ -63,7 +63,7 @@ module.exports.dealerSignUp = function (req, res, next) {
               role:role,
               bank_details:bank_details,
               payment_details:payment_details,
-              crops_subscribed
+              crops_subscribed:crops_subscribed
             });
 
             dealer
@@ -107,7 +107,7 @@ module.exports.dealerSignIn = function (req, res, next) {
               role:dealer.role
             }
 
-            const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "300s" })
+            const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1h" })
 
             return res.status(200).json({
               message: "Auth Successful",

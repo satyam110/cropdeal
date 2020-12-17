@@ -103,7 +103,7 @@ module.exports.farmerSignIn = function (req, res, next) {
               role: farmer.role
             }
 
-            const token = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "600s" })
+            const token = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1h" })
             return res.status(200).json({
               message: "Auth Successful",
               token,

@@ -13,7 +13,7 @@
       <div class="col-md-4" *ngFor="let crop of crops">
         <div class="card text-center mt-2">
           <div class="card-body">
-            <app-skeleton-loader *ngIf="!loaded" Cwidth="300" Cheight="250"></app-skeleton-loader>
+            <app-skeleton-loader *ngIf="!loaded"  class="d-flex justify-content-center" Cwidth="300" Cheight="250"></app-skeleton-loader>
             <div class="crop-image">
               <img *ngIf="loaded" class="card-img-top " [src]="crop.imgUrl" [alt]="crop.name">
             </div>

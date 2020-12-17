@@ -20,11 +20,11 @@
         <div class="card-header">
           <div class="row">
             <div class="col-md-10">
-              <app-skeleton-loader *ngIf="!loaded" Cwidth="250" Cheight="50"></app-skeleton-loader>
+              <app-skeleton-loader *ngIf="!loaded"  class="d-flex justify-content-center" Cwidth="250" Cheight="50"></app-skeleton-loader>
               <h4 *ngIf="loaded" class="w-75 p-3">{{user.name}}&apos;s Profile</h4>
             </div>
             <div class="col-md-2 mt-3 float-right">
-              <app-skeleton-loader *ngIf="!loaded" Cwidth="30" Cheight="30"></app-skeleton-loader>
+              <app-skeleton-loader *ngIf="!loaded" class="d-flex justify-content-center"  Cwidth="30" Cheight="30"></app-skeleton-loader>
               <button *ngIf="loaded" (click)="editable=true" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></button>
             </div>
           </div>

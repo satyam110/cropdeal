@@ -39,7 +39,7 @@ app.use(cors());
 app.use('/uploads',express.static("uploads"))
 
 //database connection
-mongoose.connect(process.env.CROP_URL,{ useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
+mongoose.connect(process.env.CROP_URL,{ useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true})
         .then(console.log('Connected to Mongo Atlas'))
         .catch(error=>console.log(error));
 

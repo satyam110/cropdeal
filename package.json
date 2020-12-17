@@ -4,7 +4,8 @@
   "description": "CropDeal case studies services",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha services/**/tests/*.js",
+    "coverage": "nyc --reporter=text npm test"
   },
   "author": "Satyam Pawar",
   "license": "MIT",
@@ -23,5 +24,11 @@
     "swagger-jsdoc": "^6.0.0-rc.4",
     "swagger-ui-express": "^4.1.5",
     "validator": "^13.5.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.2.1",
+    "nyc": "^15.1.0"
   }
 }
