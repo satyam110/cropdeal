@@ -45,21 +45,21 @@ module.exports.stripePayment = function(req,res,next) {
 
     })
 
-    const mailData ={
-        from: process.env.MAIL_ID,
-        to: req.body.sellerEmail,
-        subject: 'CropDeal | Order Placed for '+req.body.productName,
-        text:  `Hello ${req.body.sellerName}, Your product ${req.body.productName} was purchased by ${req.body.buyerName}. Below are the details,`,
-        html: `<h2>Order Details</h2> <hr>
-            <p>Buyer: ${req.body.buyerName}</p>
-            <p>Product: ${req.body.productName}</p>
-            <p>Quantity: ${req.body.quantity}</p>
-            <p>Total: ${req.body.amount}</p>
-            <h4>Please log in to portal to see purchase invoice</h4>
-            <footer>CropDeal</footer>`
-    }
+    // const mailData ={
+    //     from: process.env.MAIL_ID,
+    //     to: req.body.sellerEmail,
+    //     subject: 'CropDeal | Order Placed for '+req.body.productName,
+    //     text:  `Hello ${req.body.sellerName}, Your product ${req.body.productName} was purchased by ${req.body.buyerName}. Below are the details,`,
+    //     html: `<h2>Order Details</h2> <hr>
+    //         <p>Buyer: ${req.body.buyerName}</p>
+    //         <p>Product: ${req.body.productName}</p>
+    //         <p>Quantity: ${req.body.quantity}</p>
+    //         <p>Total: ${req.body.amount}</p>
+    //         <h4>Please log in to portal to see purchase invoice</h4>
+    //         <footer>CropDeal</footer>`
+    // }
 
-    sendEmail(mailData);
+    // sendEmail(mailData);
     console.log(req.body);
 }
 

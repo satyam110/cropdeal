@@ -3,14 +3,14 @@ const chaiHttp = require('chai-http');
 const server = require('../app');
 
 chai.should();
-let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYzkxNzEzNjIwZjIzMzg0Y2M4MTQ0ZiIsImVtYWlsIjoic2F0eWFtQHRlc3QuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjA4MjA4NDAwLCJleHAiOjE2MDgyMTIwMDB9.Cp4MII-0Kr42QgzUOi3Lk6iNlnxrQBVmXZqjy1PnkpY"
+let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYzkxNzEzNjIwZjIzMzg0Y2M4MTQ0ZiIsImVtYWlsIjoic2F0eWFtQHRlc3QuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjA4NTUyNzc2LCJleHAiOjE2MDg1NTYzNzZ9.BlfvWyVC12JtYKuhMgaVqlWUbgg-I5otjDUp1f27QOs"
 chai.use(chaiHttp);
 
 describe('Crops API',() =>{
     describe('GET /crops', ()=>{
     
         it('It should get all the crops', (done) => {
-            chai.request('http://localhost:3001')
+            chai.request(server)
                 .get('/crops')
                 .set({"Authorization":`Bearer ${token}`})
                 .end((err, response) => {
@@ -21,7 +21,7 @@ describe('Crops API',() =>{
                 done();
         })
         it('It should not return all the crops', (done) => {
-            chai.request('http://localhost:3001')
+            chai.request(server)
                 .get('/crop')
                 .set({"Authorization":`Bearer ${token}`})
                 .end((err, response) => {
@@ -34,7 +34,7 @@ describe('Crops API',() =>{
     describe('GET /crops/:id', ()=>{
         
         it('It should get all the crops', (done) => {
-            chai.request('http://localhost:3001')
+            chai.request(server)
                 .get('/crops/5fd910a0438be938543db836')
                 .set({"Authorization":`Bearer ${token}`})
                 .end((err, response) => {
@@ -52,7 +52,7 @@ describe('Crops API',() =>{
         })
 
         it('It should return not found', (done) => {
-            chai.request('http://localhost:3001')
+            chai.request(server)
                 .get('/crops/5fd910a0438be938543db654') //invalid id
                 .set({"Authorization":`Bearer ${token}`})
                 .end((err, response) => {
@@ -73,7 +73,7 @@ describe('Crops API',() =>{
                 "cost": "25",
                 "uploader": "5fc91713620f23384cc8144f"
             }
-            chai.request('http://localhost:3001')
+            chai.request(server)
                 .post('/crops')
                 .send(crop)
                 .set({"Authorization":`Bearer ${token}`})
@@ -93,7 +93,7 @@ describe('Crops API',() =>{
                 "location": "Mumbai",
                 "cost": "32"
             }
-            chai.request('http://localhost:3001')
+            chai.request(server)
                 .put('/crops/'+id)
                 .send(crop)
                 .set({"Authorization":`Bearer ${token}`})
@@ -115,7 +115,7 @@ describe('Crops API',() =>{
             //5fdb323f8e24355030e39a66
             const id = '5fdb2f498e24355030e39a61'
             
-            chai.request('http://localhost:3001')
+            chai.request(server)
                 .delete('/crops/'+id)
                 .set({"Authorization":`Bearer ${token}`})
                 .end((err, response) => {
@@ -130,7 +130,7 @@ describe('Crops API',() =>{
             //5fdb323f8e24355030e39a66
             const id = '5fdb2f498e24355030f54e76'
             
-            chai.request('http://localhost:3001')
+            chai.request(server)
                 .delete('/crops/'+id)
                 .set({"Authorization":`Bearer ${token}`})
                 .end((err, response) => {

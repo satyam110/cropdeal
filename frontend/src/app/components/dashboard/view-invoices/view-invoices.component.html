@@ -1,5 +1,10 @@
-<div class="container">
-  <div class="row mt-5">
+<div  class="container">
+  <div *ngIf="invoices.length===0" class="card text-justify">
+    <div class="card-header">
+      <h6 class="card-title">No Invoices to show</h6>
+    </div>
+  </div>
+  <div *ngIf="invoices.length>0" class="row mt-5">
     <div class="col-md-6 mb-3" *ngFor="let invoice of invoices">
       <div class="card text-justify">
         <div class="card-header">

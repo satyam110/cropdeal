@@ -3,14 +3,14 @@ const chaiHttp = require('chai-http');
 const server = require('../app');
 
 chai.should();
-let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYzkxNzEzNjIwZjIzMzg0Y2M4MTQ0ZiIsImVtYWlsIjoic2F0eWFtQHRlc3QuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjA4MjA4NDAwLCJleHAiOjE2MDgyMTIwMDB9.Cp4MII-0Kr42QgzUOi3Lk6iNlnxrQBVmXZqjy1PnkpY"
+let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYzkxNzEzNjIwZjIzMzg0Y2M4MTQ0ZiIsImVtYWlsIjoic2F0eWFtQHRlc3QuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjA4NTUyNzc2LCJleHAiOjE2MDg1NTYzNzZ9.BlfvWyVC12JtYKuhMgaVqlWUbgg-I5otjDUp1f27QOs"
 chai.use(chaiHttp);
 
 describe('Farmers API',() =>{
     describe('GET /farmer', ()=>{
     
         it('It should get all the farmers information', (done) => {
-            chai.request('http://localhost:3000')
+            chai.request(server)
                 .get('/farmer')
                 .set({"Authorization":`Bearer ${token}`})
                 .end((err, response) => {
@@ -21,7 +21,7 @@ describe('Farmers API',() =>{
                 done();
         })
         it('It should not return all the farmers information', (done) => {
-            chai.request('http://localhost:3000')
+            chai.request(server)
                 .get('/farmers')
                 .set({"Authorization":`Bearer ${token}`})
                 .end((err, response) => {
@@ -34,7 +34,7 @@ describe('Farmers API',() =>{
     describe('GET /farmer/profile/:id', ()=>{
         let id = '5fc91a241a1c386e54f63421'
         it('It should get profile of a single user', (done) => {
-            chai.request('http://localhost:3000')
+            chai.request(server)
                 .get('/farmer/profile/'+id)
                 .set({"Authorization":`Bearer ${token}`})
                 .end((err, response) => {
@@ -51,7 +51,7 @@ describe('Farmers API',() =>{
         })
 
         it('It should return not found', (done) => {
-            chai.request('http://localhost:3000')
+            chai.request(server)
                 .get('/farmer/profile/5fd910a0438be938543db654') //invalid id
                 .set({"Authorization":`Bearer ${token}`})
                 .end((err, response) => {
@@ -71,7 +71,7 @@ describe('Farmers API',() =>{
                 "password": "john123",
                 "description": "Hello, I'm John"
             }
-            chai.request('http://localhost:3000')
+            chai.request(server)
                 .post('/farmer/signup')
                 .send(farmer)
                 .set({"Authorization":`Bearer ${token}`})
@@ -89,12 +89,47 @@ describe('Farmers API',() =>{
                 "password": "shaun123",
                 "description": "Hello, I'm Shaun"
             }
-            chai.request('http://localhost:3000')
+            chai.request(server)
                 .post('/farmer/signup')
                 .send(farmer)
                 .set({"Authorization":`Bearer ${token}`})
                 .end((err, response) => {
                     response.should.have.status(422);
+                })
+            done();
+        })
+    })
+
+    describe('POST /farmer/login',() => {
+        it('It should login farmer', (done) => {
+            const farmer = {
+                "email": "shaun@test.com",
+                "password": "shaun123"
+            }
+            chai.request(server)
+                .post('/farmer/login')
+                .send(farmer)
+                .end((err, response) => {
+                    response.should.have.status(200);
+                    response.should.be.a('object')
+                    response.body.should.have.property("message");
+                    response.body.should.have.property("token");
+                    response.body.should.have.property("id");
+                    response.body.should.have.property("email");
+                    response.body.should.have.property("role");
+                })
+            done();
+        })
+        it('It should not login farmer', (done) => {
+            const farmer = {
+                "email": "john@test.com",
+                "password": "john432"
+            }
+            chai.request(server)
+                .post('/farmer/login')
+                .send(farmer)
+                .end((err, response) => {
+                    response.should.have.status(401);
                 })
             done();
         })
@@ -106,7 +141,7 @@ describe('Farmers API',() =>{
             const farmer = {
               "description":"I'm Roman Kane"
             }
-            chai.request('http://localhost:3000')
+            chai.request(server)
                 .put('/farmer/'+id)
                 .send(farmer)
                 .set({"Authorization":`Bearer ${token}`})
