@@ -32,7 +32,7 @@ const routes: Routes = [
   {path:'login', component:LoginComponent},
   {path:'signup', component:SignupComponent},
   {
-    path:'dashboard/:id',
+    path:'dashboard',
     component:DashboardComponent,
     children:[
       {

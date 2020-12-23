@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('currentUser',res.id)
             localStorage.setItem('role',res.role)
             localStorage.setItem('email',res.email)
-            this._router.navigate([`/dashboard/${res.id}/profile`])
+            this._router.navigate([`/dashboard/profile`])
           },
           err => {
             if (err instanceof HttpErrorResponse){

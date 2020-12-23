@@ -16,7 +16,7 @@
     <ul class="navbar-nav">
         <a class="nav-link" *ngIf="!_authService.loggedIn()" routerLink="/login" routerLinkActive="active"><h5>Login</h5></a>
         <a class="nav-link" *ngIf="!_authService.loggedIn()" routerLink="/signup" routerLinkActive="active"><h5>Register</h5></a>
-        <a routerLink="/dashboard/{{currentUser}}/profile" *ngIf="_authService.loggedIn()" style="cursor:pointer" class="nav-link"><i class="fa fa-user-circle fa-2x"></i></a>
+        <a routerLink="/dashboard/profile" *ngIf="_authService.loggedIn()" style="cursor:pointer" class="nav-link"><i class="fa fa-user-circle fa-2x"></i></a>
         <a class="nav-link" *ngIf="_authService.loggedIn()" style="cursor:pointer" (click)="_authService.logoutUser()"><h5>Logout</h5></a>
     </ul>
   </div>
