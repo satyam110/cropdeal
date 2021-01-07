@@ -172,7 +172,7 @@
     <p class="lead"><strong>Payment Processed Successfully with transaction ID <span class="text-success">{{txn_id}}</span></strong></p>
     <hr>
     <p class="lead">
-      <a class="btn btn-primary btn-sm" routerLink="/dashboard/{{currentUser}}/invoices" (click)="buy=false;pay=false" role="button">Continue</a>
+      <a class="btn btn-primary btn-sm" routerLink="/dashboard/invoices" (click)="buy=false;pay=false" role="button">Continue</a>
     </p>
   </div>
   <div *ngIf="showFailure && !showSuccess" class="jumbotron text-center mt-4 mb-4">
