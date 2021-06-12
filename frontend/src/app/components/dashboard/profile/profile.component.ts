@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { FormBuilder, FormGroup} from '@angular/forms';
-
+import { User } from '../../../models/user.model'
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -14,7 +14,7 @@ export class ProfileComponent implements OnInit {
   id:string;
   role:string;
   profileForm : FormGroup;
-  user={role: "", _id: "", name: "", email: "", phone: null, description: "", bank_details:{bank_name:"",acc_no:null,ifsc_code:""} }
+  user:User
   editable=false;
   loaded=false;
   constructor(private _authService:AuthService, private _route:ActivatedRoute, private router:Router, private fb: FormBuilder, private _profile: ProfileService) { }

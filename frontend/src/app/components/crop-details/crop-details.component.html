@@ -169,7 +169,7 @@
   <div *ngIf="showSuccess && !showFailure" class="jumbotron text-center mt-4 mb-4">
     <div class="d-flex justify-content-center" ><i class="fa fa-check-circle" style="font-size:54px;color:green" aria-hidden="true"></i></div>
     <h1 class="display-3">Thank You!</h1>
-    <p class="lead"><strong>Payment Processed Successfully with transaction ID <span class="text-success">{{txn_id}}</span></strong></p>
+    <p class="lead"><strong>Payment Processed Successfully with transaction ID <span class="text-success">{{txnId}}</span></strong></p>
     <hr>
     <p class="lead">
       <a class="btn btn-primary btn-sm" routerLink="/dashboard/invoices" (click)="buy=false;pay=false" role="button">Continue</a>

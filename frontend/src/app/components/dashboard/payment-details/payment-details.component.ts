@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
-
+import { PaymentDetails } from '../../../models/user.model'
 @Component({
   selector: 'app-payment-details',
   templateUrl: './payment-details.component.html',
@@ -13,7 +13,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 export class PaymentDetailsComponent implements OnInit {
 
   success=false;
-  payment_details = {card_type:"",card_number:null,expiry:"",cvv:null}
+  payment_details:PaymentDetails
   cardTypes = ['Credit Card','Debit Card'];
   payment_form: FormGroup
   paymentDetails:FormGroup

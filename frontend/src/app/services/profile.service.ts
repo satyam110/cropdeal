@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-
+import { User, PaymentDetails } from '../models/user.model'
 @Injectable({
   providedIn: 'root'
 })
@@ -14,23 +14,23 @@ export class ProfileService {
 
   updateBankDetails(id,role,data){
     if(role === 'farmer'){
-      return this.http.put<any>(`${this._farmerUrl}/${id}`,data);
+      return this.http.put<User>(`${this._farmerUrl}/${id}`,data);
     } else {
-      return this.http.put<any>(`${this._dealerUrl}/${id}`,data);
+      return this.http.put<User>(`${this._dealerUrl}/${id}`,data);
     }
   }
 
   updateProfileDetails(id,role,data){
     if(role === 'farmer'){
-      return this.http.put<any>(`${this._farmerUrl}/${id}`,data);
+      return this.http.put<User>(`${this._farmerUrl}/${id}`,data);
     } else {
-      return this.http.put<any>(`${this._dealerUrl}/${id}`,data);
+      return this.http.put<User>(`${this._dealerUrl}/${id}`,data);
     }
   }
 
   updatePaymentDetails(id,role,data){
     if(role === 'dealer'){
-      return this.http.put<any>(`${this._dealerUrl}/${id}`,data);
+      return this.http.put<PaymentDetails>(`${this._dealerUrl}/${id}`,data);
     }
   }
 
